@@ -146,5 +146,6 @@ public class FacesMetadata extends AbstractMetadataBundle {
                 null, null, null,
                 PatientIdentifierType.LocationBehavior.NOT_USED, false, _PatientIdentifierType.SEARCH_ID));
 
+
     }
 }

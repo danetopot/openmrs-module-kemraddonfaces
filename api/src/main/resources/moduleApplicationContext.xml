@@ -337,41 +337,52 @@
                 <ref bean="kenyaemr.common.form.progressNote" />
                 <ref bean="kenyaemr.common.form.clinicalEncounter" />
                 <!--<ref bean="kenyaemr.common.form.labResults" />-->
-                <ref bean="keaddonfaces.form.crf_9_adverseEvent"/>
                 <ref bean="kenyaemr.common.form.tbScreening" />
                 <ref bean="kenyaemr.common.form.otherMedications" />
                 <ref bean="kenyaemr.hiv.form.clinicalEncounterAddendum" />
-               
+                <!--I just want to disable all keaddonfaces forms for now-->
+                <ref bean="keaddonfaces.form.adherence" />
+                <ref bean="keaddonfaces.form.counselling" />
+                <ref bean="keaddonfaces.form.crf_1_screeningVisit" />
+                <ref bean="keaddonfaces.form.crf_2_screeningChecklist" />
+                <ref bean="keaddonfaces.form.crf_3_week0Enroll" />
+                <ref bean="keaddonfaces.form.crf_4_week4Visit" />
+                <ref bean="keaddonfaces.form.crf_5_routineFollowup" />
+                <ref bean="keaddonfaces.form.crf_6_clinicalOfficer" />
+                <ref bean="keaddonfaces.form.crf_7_diagnosis" />
+                <ref bean="keaddonfaces.form.crf_8_artInitiateChange" />
+                <ref bean="keaddonfaces.form.crf_9_adverseEvent" />
+                <ref bean="keaddonfaces.form.crf_11_subjectWithdrawal" />
+                <ref bean="keaddonfaces.form.artEligibilityForm" />
+               <!--more forms-->
+                <ref bean="keaddonfaces.form.labInvestigation" />
+                <ref bean="keaddonfaces.form.tb_icf" />
 
             </set>
         </property>
 
     </bean>
 
-    <!-- Adding Reports-->
-    <!-- Report Descriptor Bean-->
-    <!-- Hiddedn Untill 14.2 release
-    <bean id="keaddonfaces.hei.report.heiEnrollment" class="org.openmrs.module.kenyacore.report.IndicatorReportDescriptor">
-        <property name="targetUuid" value="8324878d-ce31-4ae9-bebc-b173ea69c45e" />
-        <property name="name" value="HEI Enrollment Report" />
-        <property name="description" value="Just an example" />
-        <property name="apps"><set><ref bean="kenyaemr.app.reports" /></set></property>
+    <!--Configure reports-->
+    <bean id="hrsreports.config.report" class="org.openmrs.module.kenyacore.report.ReportConfiguration">
+        <property name="commonReports">
+            <set>
+                <ref bean="keaddonfaces.common.report.wrongupnreport" />
+            </set>
+        </property>
     </bean>
-    -->
-    <!-- Report configuration to Register the Report  -->
-    <!-- Hiddedn Untill 14.2 release
-   <bean id="keaddonfaces.config.report" class="org.openmrs.module.kenyacore.report.ReportConfiguration">
 
-       <property name="programReports">
-           <map>
-               <entry key-ref="kenyaemr.mchcs.program">
-                   <set><ref bean="keaddonfaces.hei.report.heiEnrollment"/></set>
-               </entry>
-           </map>
-       </property>
-
-
-   </bean>
-    -->
+    <!--Add reports here -->
+    <bean id="keaddonfaces.common.report.wrongupnreport" class="org.openmrs.module.kenyacore.report.HybridReportDescriptor">
+        <property name="targetUuid" value="2b53fd7e-36ba-11e5-83df-000c29853f9c" />
+        <property name="name" value="Patients with wrong UPNs" />
+        <property name="description" value="A report of patients with abnormal UPN Identifiers" />
+        <property name="apps">
+            <set>
+                <ref bean="kenyaemr.app.reports" />
+            </set></property>
+        <property name="template" value="hrsreports:hrsreport.xls" />
+        <property name="repeatingSection" value="sheet:1,row:6,dataset:VisitInformation" />
+    </bean>
 
 </beans>
