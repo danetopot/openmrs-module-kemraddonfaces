@@ -15,6 +15,7 @@
 package org.openmrs.module.keaddonfaces.reporting.builder;
 
 import org.openmrs.PatientIdentifierType;
+import org.openmrs.module.keaddonfaces.reporting.cohort.definition.PatientsWithWrongUPNCohortDefinition;
 import org.openmrs.module.kenyacore.report.HybridReportDescriptor;
 import org.openmrs.module.kenyacore.report.ReportUtils;
 import org.openmrs.module.kenyacore.report.builder.AbstractHybridReportBuilder;
@@ -57,15 +58,15 @@ public class WrongUPNReportBuilder extends AbstractHybridReportBuilder {
 		dsd.addColumn("id", new PersonIdDataDefinition(), "");
 		dsd.addColumn("Name", nameDef, "");
 		dsd.addColumn("Unique Patient No", identifierDef, "");
-		dsd.addColumn("Sex", new GenderDataDefinition(), "", new GenderConverter());
+		dsd.addColumn("Sex", new GenderDataDefinition(), "");
 		dsd.addColumn("Date of Birth", new BirthdateDataDefinition(), "", new BirthdateConverter(DATE_FORMAT));
 
 	}
 
 	@Override
 	protected Mapped<CohortDefinition> buildCohort(HybridReportDescriptor descriptor, PatientDataSetDefinition dsd) {
-		CohortDefinition cd = new RDQACohortDefinition();
-        cd.setName("RDQA Patients");
+		CohortDefinition cd = new PatientsWithWrongUPNCohortDefinition();
+        cd.setName("Patients with Wrong[<10 digits]");
 		return ReportUtils.map(cd, "");
 	}
 

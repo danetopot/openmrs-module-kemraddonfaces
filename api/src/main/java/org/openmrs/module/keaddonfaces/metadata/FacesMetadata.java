@@ -87,7 +87,9 @@ public class FacesMetadata extends AbstractMetadataBundle {
      */
     @Override
     public void install() {
-
+        /**
+         * I am temporarily disabling these metadata installation since they are not used.
+         */
         //install encounter_types
         install(encounterType("Adherence encounter", "Adherence visit details", _EncounterType.ADHERENCE));
         install(encounterType("General Counselling", "Encounter type that involves counselling", _EncounterType.COUNSELLING));
