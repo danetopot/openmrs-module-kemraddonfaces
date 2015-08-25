@@ -91,27 +91,27 @@ public class FacesMetadata extends AbstractMetadataBundle {
          * I am temporarily disabling these metadata installation since they are not used.
          */
         //install encounter_types
-        install(encounterType("Adherence encounter", "Adherence visit details", _EncounterType.ADHERENCE));
-        install(encounterType("General Counselling", "Encounter type that involves counselling", _EncounterType.COUNSELLING));
-        install(encounterType("Congenital Abnormality Screening", "Encounter type that involves Screening Infants for Congenital Abnormality", _EncounterType.CONGENITAL_SCREENING));
+        //install(encounterType("Adherence encounter", "Adherence visit details", _EncounterType.ADHERENCE));
+        //install(encounterType("General Counselling", "Encounter type that involves counselling", _EncounterType.COUNSELLING));
+       // install(encounterType("Congenital Abnormality Screening", "Encounter type that involves Screening Infants for Congenital Abnormality", _EncounterType.CONGENITAL_SCREENING));
        // install(encounterType("HEI Initial", "Out-patient Initial visit for HEI patients at the PSC", MchMetadata._EncounterType.HEI_INITIAL));
         //install(encounterType("HEI Followup", "Out-patient followup visit for HEI patients at the PSC", _EncounterType.HEI_FOLLOWUP));
-        install(encounterType("Art Eligibility encounter", "Art Eligibility", _EncounterType.ARV_ELIGIBILITY_ENCOUNTER));
+       // install(encounterType("Art Eligibility encounter", "Art Eligibility", _EncounterType.ARV_ELIGIBILITY_ENCOUNTER));
 
 
         //Search Encounter Types
-        install(encounterType("Screening Encounter", "Screening Visit", _EncounterType.SCREENING_VISIT));
+        /*install(encounterType("Screening Encounter", "Screening Visit", _EncounterType.SCREENING_VISIT));
         install(encounterType("Checklist Encounter", "checklist", _EncounterType.CHECKLIST_VISIT));
         install(encounterType("Adverse Event Encounter", "Adverse Event Encounter for study participant", _EncounterType.ADVERSE_EVENT));
         install(encounterType("Week0 Encounter", "Enrollment Visit at Week zero", _EncounterType.WEEK0_VISIT));
         install(encounterType("Week4 Encounter", "Followup visit for study participant at week four", _EncounterType.WEEK4_VISIT));
         install(encounterType("Subject Withdrawal Encounter", "Subject withdrawal from study", _EncounterType.SUBJECTWITHDRAWAL));
-        install(encounterType("Search Routine Followup", "Routine followup for study participant", _EncounterType.SEARCHRFV));
+        install(encounterType("Search Routine Followup", "Routine followup for study participant", _EncounterType.SEARCHRFV));*/
 
 
         //Install forms
 
-        install(form("Adherence form", null, _EncounterType.ADHERENCE, "1", _Form.ADHERENCE));
+       /* install(form("Adherence form", null, _EncounterType.ADHERENCE, "1", _Form.ADHERENCE));
         install(form("General counselling form", null, _EncounterType.COUNSELLING, "1", _Form.COUNSELLING_FORM));
         install(form("Congenital Abnormality Screening form", null, _EncounterType.CONGENITAL_SCREENING, "1", _Form.CONGENITAL_SCREENING_FORM));
         install(form("Discontinuation form", null, HivMetadata._EncounterType.HIV_DISCONTINUATION, "1", _Form.DISCONTINUATION_FORM));
@@ -120,9 +120,9 @@ public class FacesMetadata extends AbstractMetadataBundle {
         install(form("Laboratory investigation form", null, CommonMetadata._EncounterType.LAB_RESULTS, "1", _Form.LAB_FORM));
         install(form("TB ICF form", null, TbMetadata._EncounterType.TB_SCREENING, "1", _Form.TB_ICF_FORM));
         install(form("Art Eligibility form", null, _EncounterType.ARV_ELIGIBILITY_ENCOUNTER, "1", _Form.ART_ELIBILITY_FORM));
-
+*/
         //Installing SEARCH CRFs
-        install(form("CRF1-Screening Visit form", null, _EncounterType.SCREENING_VISIT, "1", _Form.CRF1_FORM));
+       /* install(form("CRF1-Screening Visit form", null, _EncounterType.SCREENING_VISIT, "1", _Form.CRF1_FORM));
         install(form("CRF2-Screening Checklist form", null, _EncounterType.CHECKLIST_VISIT, "1", _Form.CRF2_FORM));
         install(form("CRF3-Week o Enrollment", null, _EncounterType.WEEK0_VISIT, "1", _Form.CRF3_FORM));
         install(form("CRF4-Week 4 Visit", null, _EncounterType.WEEK4_VISIT, "1", _Form.CRF4_FORM));
@@ -131,23 +131,27 @@ public class FacesMetadata extends AbstractMetadataBundle {
         install(form("CRF7-Diagnosis", null, HivMetadata._EncounterType.HIV_CONSULTATION, "1", _Form.CRF7_FORM));
         install(form("CRF8-ART Initiate or Change", null, HivMetadata._EncounterType.HIV_CONSULTATION, "1", _Form.CRF8_FORM));
         install(form("CRF9-Adverse Event", null, _EncounterType.ADVERSE_EVENT, "1", _Form.CRF9_FORM));
-        install(form("CRF11-Subject Withdrawal", null, _EncounterType.SUBJECTWITHDRAWAL, "1", _Form.CRF11_FORM));
+        install(form("CRF11-Subject Withdrawal", null, _EncounterType.SUBJECTWITHDRAWAL, "1", _Form.CRF11_FORM));*/
 
         //update Identifiers
-        install(patientIdentifierType("Patient Clinic Number", "Assigned to the patient at a clinic service (not globally unique)",
+       /* install(patientIdentifierType("Patient Clinic Number", "Assigned to the patient at a clinic service (not globally unique)",
                 "^[0-9]{5}(SDC|SDH|SGO|SHU|SKG|SKI|SKS|SKT|SKU|SLA|SLW|SMB|SMG|SMS|SNA|SNG|SNG|SNN|SNR|SNS|SNT|SNW|SNY|SOB|SOG|SON|SPO|SRE|SRI|SRO|SSE|SSK|SSN|STA|STM|STO|STU|SUG|SUS|SWK|SYO)-[0-9]$",
                 "12345KLM-9", null,
-                PatientIdentifierType.LocationBehavior.REQUIRED, false, _PatientIdentifierType.PATIENT_CLINIC_NUMBER));
-        install(patientIdentifierType("HEI ID Number", "Assigned to a child patient when enrolling into HEI","^E[0-9]{5}(SDH|SKS|SKT|SMB|SMG|SNN|SNR|SNT|SNW|SOB|SOG|SSK|SSN|STM|STU|SUG|SUS|SWK)-[0-9]$",
+                PatientIdentifierType.LocationBehavior.REQUIRED, false, _PatientIdentifierType.PATIENT_CLINIC_NUMBER));*/
+        /*install(patientIdentifierType("HEI ID Number", "Assigned to a child patient when enrolling into HEI","^E[0-9]{5}(SDH|SKS|SKT|SMB|SMG|SNN|SNR|SNT|SNW|SOB|SOG|SSK|SSN|STM|STU|SUG|SUS|SWK)-[0-9]$",
                 "E54109KLM-8", null,
-                PatientIdentifierType.LocationBehavior.NOT_USED, false, _PatientIdentifierType.HEI_ID_NUMBER));
-        install(patientIdentifierType("Unique Patient Number", "Assigned to every HIV patient", "^[0-9]{5}-[0-9]{5}$", "Facility code followed by sequential number",
+                PatientIdentifierType.LocationBehavior.NOT_USED, false, _PatientIdentifierType.HEI_ID_NUMBER));*/
+        install(patientIdentifierType("Patient Clinic Number", "Assigned to the patient at a clinic service (not globally unique). Should have leading zeros to make it full",
+                "^[0-9]{5}$",
+                "5 Digit Number with leading zeros where necessary i.e 00234", null,
+                PatientIdentifierType.LocationBehavior.REQUIRED, false, _PatientIdentifierType.PATIENT_CLINIC_NUMBER));
+        install(patientIdentifierType("Unique Patient Number", "Assigned to every HIV patient", "^[0-9]{5}-[0-9]{5}$", "{Facility code}-{Patient Clinic Number} i.e 12345-00234",
                 null, PatientIdentifierType.LocationBehavior.NOT_USED, false, _PatientIdentifierType.UNIQUE_PATIENT_NUMBER));
 
-        install(patientIdentifierType("SEARCH ID Number", "Assigned to a patient when enrolling into SEARCH Study",
+        /*install(patientIdentifierType("SEARCH ID Number", "Assigned to a patient when enrolling into SEARCH Study",
                 null, null, null,
                 PatientIdentifierType.LocationBehavior.NOT_USED, false, _PatientIdentifierType.SEARCH_ID));
-
+*/
 
     }
 }
