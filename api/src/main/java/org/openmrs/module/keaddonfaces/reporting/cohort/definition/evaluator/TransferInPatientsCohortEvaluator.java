@@ -6,6 +6,7 @@ import org.openmrs.Cohort;
 import org.openmrs.annotation.Handler;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.keaddonfaces.reporting.cohort.definition.PatientsWithWrongUPNCohortDefinition;
+import org.openmrs.module.keaddonfaces.reporting.cohort.definition.TransferInPatientsCohortDefinition;
 import org.openmrs.module.kenyaemr.api.KenyaEmrService;
 import org.openmrs.module.reporting.cohort.EvaluatedCohort;
 import org.openmrs.module.reporting.cohort.definition.CohortDefinition;
@@ -18,27 +19,22 @@ import java.util.*;
 /**
  * Evaluator for patients with anomalies in their UPN identifiers
  */
-@Handler(supports = {PatientsWithWrongUPNCohortDefinition.class})
-public class PatientsWithWrongUPNCohortEvaluator implements CohortDefinitionEvaluator {
+@Handler(supports = {TransferInPatientsCohortDefinition.class})
+public class TransferInPatientsCohortEvaluator implements CohortDefinitionEvaluator {
 
     private final Log log = LogFactory.getLog(this.getClass());
 
     @Override
     public EvaluatedCohort evaluate(CohortDefinition cohortDefinition, EvaluationContext context) throws EvaluationException {
 
-		PatientsWithWrongUPNCohortDefinition definition = (PatientsWithWrongUPNCohortDefinition) cohortDefinition;
+        TransferInPatientsCohortDefinition definition = (TransferInPatientsCohortDefinition) cohortDefinition;
 
         if (definition == null)
             return null;
 
 		Cohort newCohort = new Cohort();
 
-		String qry = "select pi.patient_id, pi.identifier " +
-				" from patient_identifier pi " +
-				" where pi.voided=0 " +
-				" and pi.identifier_type=3 " +
-				" group by pi.patient_id  " +
-                " having length(pi.identifier)<10 limit 50 ";
+		String qry = "select distinct o.person_id from obs o where o.concept_id=160563 and o.value_coded=1065 ";
 
 		Map<String, Object> m = new HashMap<String, Object>();
         Set<Integer> patientIds = makePatientDataMapFromSQL(qry,m);
@@ -57,11 +53,8 @@ public class PatientsWithWrongUPNCohortEvaluator implements CohortDefinitionEval
 	protected Set<Integer> makePatientDataMap(List<Object> data) {
 		Set<Integer> idSet = new HashSet<Integer>();
 		for (Object o : data) {
-			Object[] parts = (Object[]) o;
-			if (parts.length == 2) {
-				Integer ptId = (Integer) parts[0];
+				Integer ptId = (Integer) o;
 				idSet.add(ptId);
-			}
 		}
 
 		return idSet;
