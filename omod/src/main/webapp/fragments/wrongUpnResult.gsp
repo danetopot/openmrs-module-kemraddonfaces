@@ -6,10 +6,39 @@
 
 %>
 <%= ui.resourceLinks() %>
+<style>
+    table#results tbody  tr {
+        cursor : pointer;
+    }
+</style>
 <script>
     jq = jQuery;
     jq(document).ready(function(){
-        jq("#results").dataTable();
+        var resTable = jq("#results").dataTable();
+
+        jq('#results tbody').on('click', 'tr', function () {
+            /*var data = resTable.row( this ).data();*/
+            jq("#ptname").val(jq(this).find("td").eq(0).html());
+            jq("#upn").val(jq(this).find("td").eq(2).html());
+            jq("#pcn").val(jq(this).find("td").eq(3).html());
+            jq("#ptId").val(jq(this).find("td").eq(4).html());
+        } );
+
+        jq('#editPatient').click(function() {
+            jq.getJSON('${ ui.actionLink("editUPN") }',
+                    {
+                        'ptId': jq("#ptId").val(),
+                        'newUPN': jq("#newUPN").val(),
+                        'newPCN': jq("#newPCN").val()
+                    }
+            )
+                    .success(function(data) {
+                        alert("Something is received");
+                    })
+                    .error(function (data) {
+                        alert("Something went wrong somewhere");
+                    })
+        });
     });
 </script>
 <fieldset>
@@ -21,16 +50,18 @@
                 <td>Gender</td>
                 <td>Unique Patient No</td>
                 <td>Patient Clinic No</td>
+                <td>&nbsp;</td>
 
             </thead>
             <tbody>
             <% if (patients) { %>
             <% patients.each { pt -> %>
                 <tr>
-                    <td>${ pt.names }</td>getPatientIdentifier
+                    <td>${ pt.names }</td>
                     <td>${ pt.gender }</td>
                     <td>${ pt.getPatientIdentifier(3) }</td>
                     <td>${ pt.getPatientIdentifier(7) }</td>
+                    <td style="display:none">${ pt.id }</td>
                 </tr>
             <% } %>
             <% } else { %>
@@ -43,21 +74,22 @@
     </div>
 
     <div>
-        <table width="100%">
+        <table width="70%">
             <tr>
-                <th colspan="2">Edit Patient Unique Number</th>
+                <td><b>Patient Name:</b></td>
+                <td colspan="3"><input type="text" size="50" id="ptname" readonly /></td>
+            </tr>
+
+            <tr>
+                <td><b>Unique Patient No</b></td>
+                <td><input type="text" id="upn" readonly /></td>
+                <td colspan="2"><input type="text" id="newUPN"  /><input type="hidden" id="ptId" /></td>
             </tr>
             <tr>
-                <td>Current UPN</td>
-                <td>Current Patient Clinic No</td>
-            </tr>
-            <tr>
-                <td><input type="text" value="13708-09876" readonly /></td>
-                <td><input type="text" value="09876" readonly /></td>
-            </tr>
-            <tr>
-                <td><input type="text" value="13708-09876"  /></td>
-                <td><input type="text" value="09876"  /></td>
+                <td><b>Patient Clinic No</b></td>
+                <td><input type="text" id="pcn" readonly /></td>
+                <td><input type="text" id="newPCN"  /></td>
+                <td><input type="button" id="editPatient" value="Save Changes" /></td>
             </tr>
         </table>
     </div>
