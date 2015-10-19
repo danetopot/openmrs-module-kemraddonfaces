@@ -37,20 +37,11 @@
     </bean>-->
 
     <!--adding app for resolving wrong unique patient nos-->
-    <bean id="keaddonfaces.app.faces.upn" factory-bean="kenyacore.appFactoryBean" factory-method="createInstance">
+    <bean id="keaddonfaces.upn" factory-bean="kenyacore.appFactoryBean" factory-method="createInstance">
         <constructor-arg value="keaddonfaces.cleanUpn" />
-        <constructor-arg value="Wrong UPN Clean Up" />
+        <constructor-arg value="Data Cleaning" />
         <constructor-arg value="keaddonfaces/faces/dataCleaning.page" />
-        <constructor-arg value="keaddonfaces:apps/order_history.png" />
-        <constructor-arg value="1100000" />
-    </bean>
-
-    <!--app for displaying transfer in patients-->
-    <bean id="keaddonfaces.app.faces.tiPatients" factory-bean="kenyacore.appFactoryBean" factory-method="createInstance">
-        <constructor-arg value="keaddonfaces.tiPatients" />
-        <constructor-arg value="TI Patients Clean Up" />
-        <constructor-arg value="keaddonfaces/faces/tiPatients.page" />
-        <constructor-arg value="keaddonfaces:apps/order_history.png" />
+        <constructor-arg value="keaddonfaces:apps/dataCleaning-icon.png" />
         <constructor-arg value="1100000" />
     </bean>
 
