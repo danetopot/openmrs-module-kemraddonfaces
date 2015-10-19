@@ -38,7 +38,7 @@ public class PatientsWithWrongUPNCohortEvaluator implements CohortDefinitionEval
 				" where pi.voided=0 " +
 				" and pi.identifier_type=3 " +
 				" group by pi.patient_id  " +
-                " having length(pi.identifier)<10 limit 100 ";
+                " having length(pi.identifier)<10 order by pi.patient_id asc limit 100 ";
 
 		Map<String, Object> m = new HashMap<String, Object>();
         Set<Integer> patientIds = makePatientDataMapFromSQL(qry,m);

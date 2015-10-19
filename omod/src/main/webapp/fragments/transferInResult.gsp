@@ -57,7 +57,7 @@
     });
 </script>
 <fieldset>
-     <legend>Patients with wrong Unique Patient Numbers</legend>
+     <legend>Transfer-In Patients</legend>
     <div>
         <table id="results" width="100%">
             <thead>

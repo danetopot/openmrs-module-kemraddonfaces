@@ -13,22 +13,22 @@
  */
 package org.openmrs.module.keaddonfaces.fragment.controller;
 
-import org.openmrs.*;
+import org.openmrs.Location;
+import org.openmrs.Patient;
+import org.openmrs.PatientIdentifier;
+import org.openmrs.PatientIdentifierType;
 import org.openmrs.api.PatientService;
 import org.openmrs.api.context.Context;
-import org.openmrs.module.keaddonfaces.metadata.FacesMetadata;
 import org.openmrs.module.keaddonfaces.reporting.cohort.definition.PatientsWithWrongUPNCohortDefinition;
+import org.openmrs.module.keaddonfaces.reporting.cohort.definition.TransferInPatientsCohortDefinition;
 import org.openmrs.module.kenyaemr.EmrConstants;
 import org.openmrs.module.kenyaemr.metadata.HivMetadata;
-import org.openmrs.module.metadatadeploy.MetadataUtils;
 import org.openmrs.module.reporting.cohort.EvaluatedCohort;
 import org.openmrs.module.reporting.cohort.definition.CohortDefinition;
 import org.openmrs.module.reporting.cohort.definition.service.CohortDefinitionService;
 import org.openmrs.module.reporting.evaluation.EvaluationContext;
 import org.openmrs.module.reporting.evaluation.EvaluationException;
-import org.openmrs.ui.framework.SimpleObject;
 import org.openmrs.ui.framework.UiUtils;
-import org.openmrs.ui.framework.annotation.FragmentParam;
 import org.openmrs.ui.framework.fragment.FragmentModel;
 import org.openmrs.ui.framework.fragment.action.FailureResult;
 import org.openmrs.ui.framework.fragment.action.FragmentActionResult;
@@ -38,13 +38,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.*;
 
 /**
- * controller class for wrong upn fragment
+ * controller class for transfer in fragment
  */
-public class WrongUpnResultFragmentController {
+public class TransferInResultFragmentController {
 
     public void controller(FragmentModel model, UiUtils ui) {
 
-        CohortDefinition cd = new PatientsWithWrongUPNCohortDefinition();
+        CohortDefinition cd = new TransferInPatientsCohortDefinition();
         CohortDefinitionService service = Context.getService(CohortDefinitionService.class);
         PatientService patientService = Context.getPatientService();
         EvaluationContext context = new EvaluationContext(new Date());
@@ -100,86 +100,5 @@ public class WrongUpnResultFragmentController {
               return  new FailureResult("An error occurred while updating patient identifiers");
         }
         return new SuccessResult("Identifier was successfully edited");
-    }
-
-    private List<PatientStub> refreshPatientList() {
-        CohortDefinition cd = new PatientsWithWrongUPNCohortDefinition();
-        CohortDefinitionService service = Context.getService(CohortDefinitionService.class);
-        PatientService patientService = Context.getPatientService();
-        EvaluationContext context = new EvaluationContext(new Date());
-        List<PatientStub> patients = new ArrayList<PatientStub>();
-        try {
-            EvaluatedCohort evaluatedCohort = service.evaluate(cd,context);
-            for (Integer ptId : evaluatedCohort.getMemberIds()) {
-                patients.add(clonePatient(patientService.getPatient(ptId)));
-            }
-
-        } catch (EvaluationException e) {
-            e.printStackTrace();
-        }
-        return patients;
-    }
-    private PatientStub clonePatient (Patient p) {
-        String names = p.getGivenName() + " " + p.getMiddleName() + " " + p.getFamilyName();
-        String upn = p.getPatientIdentifier(3) !=null? p.getPatientIdentifier(3).toString() : "";
-        String pcn = p.getPatientIdentifier(7) !=null? p.getPatientIdentifier(7).toString() : "";
-        PatientStub stub = new PatientStub(p.getId(), names, upn, pcn, p.getGender());
-        return stub;
-    }
-
-    class PatientStub {
-        private Integer id;
-        private String names;
-        private String uniquePatientNo;
-        private String patientClinicNo;
-        private String gender;
-
-        PatientStub(Integer id, String names, String uniquePatientNo, String patientClinicNo, String gender) {
-            this.id = id;
-            this.names = names;
-            this.uniquePatientNo = uniquePatientNo;
-            this.patientClinicNo = patientClinicNo;
-            this.gender = gender;
-        }
-
-        public Integer getId() {
-            return id;
-        }
-
-        public void setId(Integer id) {
-            this.id = id;
-        }
-
-        public String getNames() {
-            return names;
-        }
-
-        public void setNames(String names) {
-            this.names = names;
-        }
-
-        public String getUniquePatientNo() {
-            return uniquePatientNo;
-        }
-
-        public void setUniquePatientNo(String uniquePatientNo) {
-            this.uniquePatientNo = uniquePatientNo;
-        }
-
-        public String getPatientClinicNo() {
-            return patientClinicNo;
-        }
-
-        public void setPatientClinicNo(String patientClinicNo) {
-            this.patientClinicNo = patientClinicNo;
-        }
-
-        public String getGender() {
-            return gender;
-        }
-
-        public void setGender(String gender) {
-            this.gender = gender;
-        }
     }
 }

@@ -17,7 +17,7 @@ import org.openmrs.module.reporting.evaluation.EvaluationException;
 import java.util.*;
 
 /**
- * Evaluator for patients with anomalies in their UPN identifiers
+ * Evaluator class for TI patients
  */
 @Handler(supports = {TransferInPatientsCohortDefinition.class})
 public class TransferInPatientsCohortEvaluator implements CohortDefinitionEvaluator {
@@ -34,7 +34,11 @@ public class TransferInPatientsCohortEvaluator implements CohortDefinitionEvalua
 
 		Cohort newCohort = new Cohort();
 
-		String qry = "select distinct o.person_id from obs o where o.concept_id=160563 and o.value_coded=1065 ";
+		String qry = " select o.person_id, pi.identifier " +
+                " from obs o " +
+                " inner join patient_identifier pi on pi.patient_id = o.person_id and pi.identifier_type=3 and pi.voided=0 " +
+                " where o.concept_id=160563 and o.value_coded=1065 and o.voided=0 and (pi.date_changed < '2015-10-01' or pi.date_changed is null) " +
+                " group by pi.patient_id having length(pi.identifier)<11 order by o.person_id limit 100; ";
 
 		Map<String, Object> m = new HashMap<String, Object>();
         Set<Integer> patientIds = makePatientDataMapFromSQL(qry,m);
@@ -51,12 +55,15 @@ public class TransferInPatientsCohortEvaluator implements CohortDefinitionEvalua
 	}
 
 	protected Set<Integer> makePatientDataMap(List<Object> data) {
-		Set<Integer> idSet = new HashSet<Integer>();
-		for (Object o : data) {
-				Integer ptId = (Integer) o;
-				idSet.add(ptId);
-		}
+        Set<Integer> idSet = new HashSet<Integer>();
+        for (Object o : data) {
+            Object[] parts = (Object[]) o;
+            if (parts.length == 2) {
+                Integer ptId = (Integer) parts[0];
+                idSet.add(ptId);
+            }
+        }
 
-		return idSet;
+        return idSet;
 	}
 }
