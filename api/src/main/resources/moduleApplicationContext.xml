@@ -28,20 +28,30 @@
         <property name="iconUrl" value="keaddonfaces:apps/example.png"/>
     </bean>
     -->
-    <bean id="keaddonfaces.app.faces" factory-bean="kenyacore.appFactoryBean" factory-method="createInstance">
+   <!-- <bean id="keaddonfaces.app.faces" factory-bean="kenyacore.appFactoryBean" factory-method="createInstance">
         <constructor-arg value="keaddonfaces.faces" />
         <constructor-arg value="Faces Forms" />
         <constructor-arg value="keaddonfaces/faces/facesHome.page" />
         <constructor-arg value="keaddonfaces:apps/order_history.png" />
         <constructor-arg value="1100000" />
+    </bean>-->
+
+    <!--adding app for resolving wrong unique patient nos-->
+    <bean id="keaddonfaces.upn" factory-bean="kenyacore.appFactoryBean" factory-method="createInstance">
+        <constructor-arg value="keaddonfaces.cleanUpn" />
+        <constructor-arg value="Data Cleaning" />
+        <constructor-arg value="keaddonfaces/faces/dataCleaning.page" />
+        <constructor-arg value="keaddonfaces:apps/dataCleaning-icon.png" />
+        <constructor-arg value="1100000" />
     </bean>
+
 
     <!-- Forms -->
 
     <!-- SEARCH STUDY FORMS -->
 
 
-    <bean id="keaddonfaces.form.crf_1_screeningVisit" class="org.openmrs.module.kenyacore.form.FormDescriptor">
+ <!--   <bean id="keaddonfaces.form.crf_1_screeningVisit" class="org.openmrs.module.kenyacore.form.FormDescriptor">
         <property name="targetUuid" value="e3bbfac4-d32f-4946-8167-eba6e9aab1aa" />
         <property name="apps">
             <set>
@@ -172,7 +182,7 @@
     </bean>
 
 
-    <!-- FACES -->
+    &lt;!&ndash; FACES &ndash;&gt;
     <bean id="keaddonfaces.form.adherence" class="org.openmrs.module.kenyacore.form.FormDescriptor">
         <property name="targetUuid" value="db64f32b-1ce5-4767-a0d1-45eeb6b81eb8" />
         <property name="apps">
@@ -288,19 +298,19 @@
 
         <property name="icon" value="keaddonfaces:forms/generic.png" />
         <property name="htmlform" value="keaddonfaces:tb_icf.html" />
-    </bean>
+    </bean>-->
 
-    <bean id="keaddonfaces.config.form" class="org.openmrs.module.kenyacore.form.FormConfiguration">
-        <!-- Example of adding a form to the general visit form list -->
+<!--    <bean id="keaddonfaces.config.form" class="org.openmrs.module.kenyacore.form.FormConfiguration">
+        &lt;!&ndash; Example of adding a form to the general visit form list &ndash;&gt;
         <property name="commonVisitForms">
             <set>
 
-                <!--<ref bean="keaddonfaces.form.adherence" />  -->
-                <!--<ref bean="keaddonfaces.form.counselling" />-->
-                <!--<ref bean="keaddonfaces.form.congenital" />-->
-                <!--<ref bean="keaddonfaces.form.discontinuation" />  -->
-                <!--<ref bean="keaddonfaces.form.heiEnrollment" />-->
-                <!--<ref bean="keaddonfaces.form.heiFollowup" />-->
+                &lt;!&ndash;<ref bean="keaddonfaces.form.adherence" />  &ndash;&gt;
+                &lt;!&ndash;<ref bean="keaddonfaces.form.counselling" />&ndash;&gt;
+                &lt;!&ndash;<ref bean="keaddonfaces.form.congenital" />&ndash;&gt;
+                &lt;!&ndash;<ref bean="keaddonfaces.form.discontinuation" />  &ndash;&gt;
+                &lt;!&ndash;<ref bean="keaddonfaces.form.heiEnrollment" />&ndash;&gt;
+                &lt;!&ndash;<ref bean="keaddonfaces.form.heiFollowup" />&ndash;&gt;
                 <ref bean="keaddonfaces.form.labInvestigation" />
                 <ref bean="keaddonfaces.form.tb_icf" />
 
@@ -308,7 +318,7 @@
             </set>
         </property>
 
-        <!-- Example of adding a form to the HIV program visit form list -->
+        &lt;!&ndash; Example of adding a form to the HIV program visit form list &ndash;&gt;
         <property name="programVisitForms">
             <map>
                 <entry key-ref="kenyaemr.hiv.program">
@@ -331,47 +341,70 @@
             </map>
         </property>
 
-        <!-- Example of disabling an existing form. This form will no longer appear in the "Available Forms" list -->
+        &lt;!&ndash; Example of disabling an existing form. This form will no longer appear in the "Available Forms" list &ndash;&gt;
         <property name="disabledForms">
             <set>
                 <ref bean="kenyaemr.common.form.progressNote" />
                 <ref bean="kenyaemr.common.form.clinicalEncounter" />
-                <!--<ref bean="kenyaemr.common.form.labResults" />-->
-                <ref bean="keaddonfaces.form.crf_9_adverseEvent"/>
+                &lt;!&ndash;<ref bean="kenyaemr.common.form.labResults" />&ndash;&gt;
                 <ref bean="kenyaemr.common.form.tbScreening" />
                 <ref bean="kenyaemr.common.form.otherMedications" />
                 <ref bean="kenyaemr.hiv.form.clinicalEncounterAddendum" />
-               
+                &lt;!&ndash;I just want to disable all keaddonfaces forms for now&ndash;&gt;
+                <ref bean="keaddonfaces.form.adherence" />
+                <ref bean="keaddonfaces.form.counselling" />
+                <ref bean="keaddonfaces.form.crf_1_screeningVisit" />
+                <ref bean="keaddonfaces.form.crf_2_screeningChecklist" />
+                <ref bean="keaddonfaces.form.crf_3_week0Enroll" />
+                <ref bean="keaddonfaces.form.crf_4_week4Visit" />
+                <ref bean="keaddonfaces.form.crf_5_routineFollowup" />
+                <ref bean="keaddonfaces.form.crf_6_clinicalOfficer" />
+                <ref bean="keaddonfaces.form.crf_7_diagnosis" />
+                <ref bean="keaddonfaces.form.crf_8_artInitiateChange" />
+                <ref bean="keaddonfaces.form.crf_9_adverseEvent" />
+                <ref bean="keaddonfaces.form.crf_11_subjectWithdrawal" />
+                <ref bean="keaddonfaces.form.artEligibilityForm" />
+               &lt;!&ndash;more forms&ndash;&gt;
+                <ref bean="keaddonfaces.form.labInvestigation" />
+                <ref bean="keaddonfaces.form.tb_icf" />
 
             </set>
         </property>
 
+    </bean>-->
+
+    <!--Configure reports-->
+    <bean id="keaddonfaces.config.report" class="org.openmrs.module.kenyacore.report.ReportConfiguration">
+        <property name="commonReports">
+            <set>
+                <ref bean="keaddonfaces.common.report.wrongupnreport" />
+            </set>
+        </property>
     </bean>
 
-    <!-- Adding Reports-->
-    <!-- Report Descriptor Bean-->
-    <!-- Hiddedn Untill 14.2 release
-    <bean id="keaddonfaces.hei.report.heiEnrollment" class="org.openmrs.module.kenyacore.report.IndicatorReportDescriptor">
-        <property name="targetUuid" value="8324878d-ce31-4ae9-bebc-b173ea69c45e" />
-        <property name="name" value="HEI Enrollment Report" />
-        <property name="description" value="Just an example" />
-        <property name="apps"><set><ref bean="kenyaemr.app.reports" /></set></property>
+    <!--Add reports here -->
+    <bean id="keaddonfaces.common.report.wrongupnreport" class="org.openmrs.module.kenyacore.report.HybridReportDescriptor">
+        <property name="targetUuid" value="2b53fd7e-36ba-11e5-83df-000c29853f9c" />
+        <property name="name" value="Patients with wrong UPNs" />
+        <property name="description" value="A report of patients with abnormal UPN Identifiers" />
+        <property name="apps">
+            <set>
+                <ref bean="kenyaemr.app.reports" />
+            </set></property>
+        <property name="template" value="hrsreports:hrsreport.xls" />
+        <property name="repeatingSection" value="sheet:1,row:6,dataset:VisitInformation" />
     </bean>
-    -->
-    <!-- Report configuration to Register the Report  -->
-    <!-- Hiddedn Untill 14.2 release
-   <bean id="keaddonfaces.config.report" class="org.openmrs.module.kenyacore.report.ReportConfiguration">
 
-       <property name="programReports">
-           <map>
-               <entry key-ref="kenyaemr.mchcs.program">
-                   <set><ref bean="keaddonfaces.hei.report.heiEnrollment"/></set>
-               </entry>
-           </map>
-       </property>
-
-
-   </bean>
-    -->
+    <!--<bean id="keaddonfaces.common.report.transferInPatients" class="org.openmrs.module.kenyacore.report.HybridReportDescriptor">
+        <property name="targetUuid" value="30755bfb-4b0e-11e5-bf96-000c29853f9c" />
+        <property name="name" value="Transfer In Patients" />
+        <property name="description" value="A report of Transfer In Patients" />
+        <property name="apps">
+            <set>
+                <ref bean="kenyaemr.app.reports" />
+            </set></property>
+        <property name="template" value="hrsreports:hrsreport.xls" />
+        <property name="repeatingSection" value="sheet:1,row:6,dataset:VisitInformation" />
+    </bean>-->
 
 </beans>
